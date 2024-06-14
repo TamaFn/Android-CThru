@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.finalproject_cthru.R
@@ -18,6 +19,8 @@ import com.example.finalproject_cthru.view.history.HistoryViewModelFactory
 import com.example.finalproject_cthru.view.login.LoginActivity
 import com.example.finalproject_cthru.view.maps.MapsActivity
 import com.example.finalproject_cthru.view.upload.UploadActivity
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ResultActivity : AppCompatActivity() {
 
@@ -25,6 +28,7 @@ class ResultActivity : AppCompatActivity() {
     private var isFavorite: Boolean = false
     private lateinit var resultViewModel: ResultViewModel
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
@@ -34,7 +38,6 @@ class ResultActivity : AppCompatActivity() {
         ReceiveSetup()
 
         resultViewModel = obtainViewModel(this)
-//        val user = intent.getParcelableExtra<UserPrediction>(EXTRA_USER) as UserPrediction
 
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()
@@ -53,10 +56,18 @@ class ResultActivity : AppCompatActivity() {
             val eyePrediction = intent.getStringExtra(EXTRA_PREDICT_CATARACT)
             val cataractConfidence = intent.getDoubleExtra(EXTRA_CONFIDENCE_CATARACT, 0.0)
 
+            val currentDateTime = LocalDateTime.now()
+            val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+            val currentDate = currentDateTime.format(dateFormatter)
+            val currentTime = currentDateTime.format(timeFormatter)
+
             val userPrediction = UserPrediction(
                 resultPrediction = eyePrediction!!,
                 confidenceScore = String.format("%.2f%%", cataractConfidence * 100),
-                imagePrediction = imageUri.toString()
+                imagePrediction = imageUri.toString(),
+                datePrediction = currentDate,
+                timePrediction = currentTime
             )
 
             resultViewModel.insertDataUser(userPrediction)

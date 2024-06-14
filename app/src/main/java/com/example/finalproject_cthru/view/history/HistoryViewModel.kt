@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.finalproject_cthru.data.remote.response.UserPrediction
 import com.example.finalproject_cthru.data.repository.DetectionRepository
 import com.example.finalproject_cthru.view.result.ResultViewModel
+import kotlinx.coroutines.launch
 
 class HistoryViewModel(application: Application) : ViewModel(){
     private val _text = MutableLiveData<String>().apply {
@@ -20,6 +22,12 @@ class HistoryViewModel(application: Application) : ViewModel(){
     fun getAllUsers(): LiveData<List<UserPrediction>> = mUserRepo.getAllData()
 
     fun removeAllUsers() = mUserRepo.removeAllData()
+
+    fun deleteUser(user: UserPrediction) {
+        viewModelScope.launch {
+            mUserRepo.deleteUser(user)
+        }
+    }
 }
 
 class HistoryViewModelFactory(private val mApp: Application) :

@@ -115,5 +115,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:cornerRadius="7dp" />
 
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppins_medium_500"
+            android:text="05.05"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/date_text"
+            app:layout_constraintStart_toEndOf="@+id/date_text" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

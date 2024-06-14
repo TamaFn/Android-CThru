@@ -42,7 +42,8 @@ class HistoryFragment : Fragment() {
 
         dashboardViewModel.getAllUsers().observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
-                val adapter = DetectionAdapter(list)
+                val mutableList = list.toMutableList()
+                val adapter = DetectionAdapter(mutableList, dashboardViewModel)
                 binding.logAdapter.adapter = adapter
             }
         }

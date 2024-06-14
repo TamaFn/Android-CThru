@@ -12,6 +12,10 @@ import kotlinx.parcelize.Parcelize
 data class UserPrediction(
 
     @PrimaryKey
+    @field:SerializedName("id")
+    @ColumnInfo("id")
+    val id: String,
+
     @field:SerializedName("result_prediction")
     @ColumnInfo("result_prediction")
     val resultPrediction: String,

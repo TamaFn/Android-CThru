@@ -55,6 +55,7 @@ class ResultActivity : AppCompatActivity() {
             val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI)!!)
             val eyePrediction = intent.getStringExtra(EXTRA_PREDICT_CATARACT)
             val cataractConfidence = intent.getDoubleExtra(EXTRA_CONFIDENCE_CATARACT, 0.0)
+            val id = intent.getStringExtra(EXTRA_ID)
 
             val currentDateTime = LocalDateTime.now()
             val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -67,7 +68,8 @@ class ResultActivity : AppCompatActivity() {
                 confidenceScore = String.format("%.2f%%", cataractConfidence * 100),
                 imagePrediction = imageUri.toString(),
                 datePrediction = currentDate,
-                timePrediction = currentTime
+                timePrediction = currentTime,
+                id = id.toString()
             )
 
             resultViewModel.insertDataUser(userPrediction)
@@ -134,6 +136,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val EXTRA_ID = "extra_id"
         const val EXTRA_USER = "extra_user"
         const val EXTRA_IMAGE_URI = "extra_image_uri"
         const val EXTRA_CONFIDENCE_CATARACT = "extra_confidence_cataract"

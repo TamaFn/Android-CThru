@@ -42,9 +42,10 @@ class HistoryFragment : Fragment() {
 
         dashboardViewModel.getAllUsers().observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
-                val mutableList = list.toMutableList()
-                val adapter = DetectionAdapter(mutableList, dashboardViewModel)
+                val adapter = DetectionAdapter(list.toMutableList(), dashboardViewModel)
                 binding.logAdapter.adapter = adapter
+            } else {
+                // Handle empty list
             }
         }
 

@@ -57,3 +57,4 @@ class DetectionAdapter(private val listUsers: MutableList<UserPrediction>,
         val delete_log_button: Button = view.findViewById(R.id.delete_log_button)
         }
     }
+

@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.finalproject_cthru.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject_cthru.databinding.FragmentHistoryBinding
-import com.example.finalproject_cthru.view.camera.CameraActivity
+import com.example.finalproject_cthru.view.adapter.DetectionAdapter
 import com.example.finalproject_cthru.view.upload.UploadActivity
 
 
@@ -24,6 +24,7 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         val dashboardViewModel =
             ViewModelProvider(this).get(HistoryViewModel::class.java)
 
@@ -40,11 +41,23 @@ class HistoryFragment : Fragment() {
             requireActivity().startActivity(intent)
         }
 
+        binding.logAdapter.layoutManager = LinearLayoutManager(requireContext())
+        binding.logAdapter.setHasFixedSize(true)
+
+        val historyUserViewModel = obtainViewModel(requireActivity())
+
+        historyUserViewModel.getAllUsers().observe(viewLifecycleOwner) { list ->
+            if (list.isNotEmpty()) {
+                val adapter = DetectionAdapter(list)
+                binding.logAdapter.adapter = adapter
+            }
+        }
+
         return root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun obtainViewModel(activity: FragmentActivity): HistoryViewModel {
+        val factory = HistoryViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[HistoryViewModel::class.java]
     }
 }

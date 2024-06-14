@@ -8,9 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.finalproject_cthru.R
+import com.example.finalproject_cthru.data.remote.response.UserPrediction
 import com.example.finalproject_cthru.databinding.ActivityResultBinding
+import com.example.finalproject_cthru.view.history.HistoryViewModelFactory
 import com.example.finalproject_cthru.view.login.LoginActivity
 import com.example.finalproject_cthru.view.maps.MapsActivity
 import com.example.finalproject_cthru.view.upload.UploadActivity
@@ -18,6 +22,9 @@ import com.example.finalproject_cthru.view.upload.UploadActivity
 class ResultActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityResultBinding
+    private var isFavorite: Boolean = false
+    private lateinit var resultViewModel: ResultViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
@@ -25,6 +32,9 @@ class ResultActivity : AppCompatActivity() {
 
         setupView()
         ReceiveSetup()
+
+        resultViewModel = obtainViewModel(this)
+        val user = intent.getParcelableExtra<UserPrediction>(EXTRA_CONFIDENCE_CATARACT) as UserPrediction
 
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()
@@ -37,6 +47,18 @@ class ResultActivity : AppCompatActivity() {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
+
+        binding.buttonSave.setOnClickListener(){
+            if (isFavorite) {
+                resultViewModel.deleteDataUser(user)
+                Toast.makeText(this, "Delete is Successful", Toast.LENGTH_SHORT).show()
+            } else {
+                resultViewModel.insertDataUser(user)
+                Toast.makeText(this, "Add is Successful", Toast.LENGTH_SHORT).show()
+            }
+            isFavorite = !isFavorite
+        }
+
     }
 
     private fun ReceiveSetup() {
@@ -70,8 +92,6 @@ class ResultActivity : AppCompatActivity() {
         binding.cataractConfidenceResult.text = formattedCataractConfidence
 
 
-
-
         if (eyePrediction == "Cataract") {
             binding.eyeConfidenceResult.setTextColor(resources.getColor(R.color.red))
         } else {
@@ -92,7 +112,13 @@ class ResultActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
+    private fun obtainViewModel(activity: AppCompatActivity): ResultViewModel {
+        val factory = HistoryViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[ResultViewModel::class.java]
+    }
+
     companion object {
+        const val EXTRA_USER = "extra_user"
         const val EXTRA_IMAGE_URI = "extra_image_uri"
         const val EXTRA_CONFIDENCE_CATARACT = "extra_confidence_cataract"
         const val EXTRA_CONFIDENCE_EYE = "extra_confidence_eye"

@@ -163,6 +163,7 @@ Pilihlah kacamata hitam yang dapat memblokir setidaknya 99% sinar UV dan berukur
     <string name="welcome_home">Welcome,</string>
     <string name="home_articles">Articles</string>
     <string name="user_home">User</string>
+    <string name="save_this_image">Save This Detection</string>
 
 
 </resources>

@@ -19,22 +19,18 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var dashboardViewModel: HistoryViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        val dashboardViewModel =
-            ViewModelProvider(this).get(HistoryViewModel::class.java)
+        dashboardViewModel = obtainViewModel(requireActivity())
 
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-//        val textView: TextView = binding.textHistory
-//        dashboardViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
 
         binding.analyzeButton.setOnClickListener {
             val intent = Intent(requireActivity(), UploadActivity::class.java)
@@ -44,9 +40,7 @@ class HistoryFragment : Fragment() {
         binding.logAdapter.layoutManager = LinearLayoutManager(requireContext())
         binding.logAdapter.setHasFixedSize(true)
 
-        val historyUserViewModel = obtainViewModel(requireActivity())
-
-        historyUserViewModel.getAllUsers().observe(viewLifecycleOwner) { list ->
+        dashboardViewModel.getAllUsers().observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
                 val adapter = DetectionAdapter(list)
                 binding.logAdapter.adapter = adapter

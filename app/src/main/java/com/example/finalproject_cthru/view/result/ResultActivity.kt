@@ -34,7 +34,7 @@ class ResultActivity : AppCompatActivity() {
         ReceiveSetup()
 
         resultViewModel = obtainViewModel(this)
-        val user = intent.getParcelableExtra<UserPrediction>(EXTRA_CONFIDENCE_CATARACT) as UserPrediction
+//        val user = intent.getParcelableExtra<UserPrediction>(EXTRA_USER) as UserPrediction
 
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()
@@ -48,18 +48,23 @@ class ResultActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.buttonSave.setOnClickListener(){
-            if (isFavorite) {
-                resultViewModel.deleteDataUser(user)
-                Toast.makeText(this, "Delete is Successful", Toast.LENGTH_SHORT).show()
-            } else {
-                resultViewModel.insertDataUser(user)
-                Toast.makeText(this, "Add is Successful", Toast.LENGTH_SHORT).show()
-            }
-            isFavorite = !isFavorite
-        }
+        binding.buttonSave.setOnClickListener() {
+            val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI)!!)
+            val eyePrediction = intent.getStringExtra(EXTRA_PREDICT_CATARACT)
+            val cataractConfidence = intent.getDoubleExtra(EXTRA_CONFIDENCE_CATARACT, 0.0)
 
+            val userPrediction = UserPrediction(
+                resultPrediction = eyePrediction!!,
+                confidenceScore = String.format("%.2f%%", cataractConfidence * 100),
+                imagePrediction = imageUri.toString()
+            )
+
+            resultViewModel.insertDataUser(userPrediction)
+            Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show()
+
+        }
     }
+
 
     private fun ReceiveSetup() {
         val image = intent.getStringExtra(EXTRA_IMAGE_URI)!!

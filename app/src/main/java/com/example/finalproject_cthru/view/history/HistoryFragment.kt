@@ -47,6 +47,7 @@ class HistoryFragment : Fragment() {
             }
         }
 
+
         return root
     }
 

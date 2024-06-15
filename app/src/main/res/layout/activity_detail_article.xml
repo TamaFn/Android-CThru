@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    style="@style/Screen"
     tools:context=".view.detailarticle.DetailArticleActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,8 +55,9 @@
             android:text="@string/detail_title_article"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/texttheme2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.222"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_back_detailarticle" />
 
@@ -71,6 +72,7 @@
             android:fontFamily="@font/poppins_regular_400"
             android:text="@string/detail_desc_article"
             android:textSize="14sp"
+            android:textColor="@color/texttheme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

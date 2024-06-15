@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!-- Dark Theme Color -->
+    <color name="texttheme">#FFFFFFFF</color>
+    <color name="bluetexttheme">#008BDE</color>
+    <color name="texttheme2">#006FB2</color>
+    <color name="texttheme3">#FF000000</color>
+    <color name="bottom_nav_icon_color">#008BDE</color>
+    <color name="buttom_nav">#FF000000</color>
+    <color name="buttom_nav_text_color">#008BDE</color>
+    <color name="upload_bg">#FF000000</color>
+
+</resources>

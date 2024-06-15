@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/Screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".view.upload.UploadActivity">
 
     <ImageView
@@ -56,7 +56,7 @@
                 android:id="@+id/upload_image"
                 android:layout_width="333dp"
                 android:layout_height="420dp"
-                android:background="#FFFFFF"
+                android:background="@color/upload_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

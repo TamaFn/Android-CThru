@@ -47,6 +47,17 @@
     <color name="yellow_11">#674718</color>
     <color name="yellow_12">#513710</color>
 
+
+    <!--  Dark Theme Color  -->
     <color name="SearchBar">#EDEDED</color>
+    <color name="texttheme">#FF000000</color>
+    <color name="texttheme2">#006FB2</color>
+    <color name="texttheme3">#FFFFFFFF</color>
+    <color name="bluetexttheme">#008BDE</color>
+    <color name="bottom_nav_icon_color">#008BDE</color>
+    <color name="buttom_nav">#FFFFFFFF</color>
+    <color name="buttom_nav_text_color">#008BDE</color>
+    <color name="upload_bg">#FFFFFFFF</color>
+
 
 </resources>

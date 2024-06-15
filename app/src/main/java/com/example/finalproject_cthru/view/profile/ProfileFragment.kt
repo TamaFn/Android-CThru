@@ -7,8 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider
 import com.example.finalproject_cthru.R
+import com.example.finalproject_cthru.data.local.pref.SettingPreferences
+import com.example.finalproject_cthru.data.local.pref.dataStore // Import your dataStore extension property here
 import com.example.finalproject_cthru.databinding.FragmentProfileBinding
+import com.example.finalproject_cthru.view.darktheme.DarkThemeViewModel
 import com.example.finalproject_cthru.view.login.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -21,6 +27,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var darkthemeViewModel: DarkThemeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +52,28 @@ class ProfileFragment : Fragment() {
         binding.editButton.setOnClickListener {
             val intent = Intent(activity, ProfileEditActivity::class.java)
             startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE)
+        }
+
+        // Dark Theme Setting
+        val pref = SettingPreferences.getInstance(requireContext().dataStore)
+
+        darkthemeViewModel = ViewModelProvider(
+            this,
+            DarkThemeViewModel.DarkThemeViewModelFactory(pref)
+        )[DarkThemeViewModel::class.java]
+
+        darkthemeViewModel.getThemeSettings().observe(viewLifecycleOwner) { isActive ->
+            if (isActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                binding.switch1.isChecked = true
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                binding.switch1.isChecked = false
+            }
+        }
+
+        binding.switch1.setOnCheckedChangeListener { _: CompoundButton?, isChecked ->
+            darkthemeViewModel.saveThemeSetting(isChecked)
         }
 
         return root

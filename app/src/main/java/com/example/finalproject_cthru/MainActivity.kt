@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.finalproject_cthru.databinding.ActivityMainBinding
@@ -20,6 +22,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.finalproject_cthru.data.local.pref.SettingPreferences
+import com.example.finalproject_cthru.data.local.pref.dataStore
+import com.example.finalproject_cthru.view.darktheme.DarkThemeViewModel
 import com.example.finalproject_cthru.view.login.LoginActivity
 import com.example.finalproject_cthru.view.onboarding.OnboardingActivity
 
@@ -60,6 +65,20 @@ class MainActivity : AppCompatActivity() {
             // User is logged in, proceed with the activity
             FragmentSetup()
             setupView()
+        }
+
+        val modePreferences = SettingPreferences.getInstance(dataStore)
+        val modeViewModel = ViewModelProvider(
+            this,
+            DarkThemeViewModel.DarkThemeViewModelFactory(modePreferences)
+        )[DarkThemeViewModel::class.java]
+
+        modeViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
     }
 

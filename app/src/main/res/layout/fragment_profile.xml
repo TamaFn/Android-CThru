@@ -83,6 +83,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins_semibold_600"
             android:text="TextView"
+            android:textColor="@color/texttheme"
             app:layout_constraintStart_toStartOf="@+id/emailIndicator"
             app:layout_constraintTop_toBottomOf="@+id/emailIndicator" />
 
@@ -105,6 +106,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins_semibold_600"
             android:text="TextView"
+            android:textColor="@color/texttheme"
             app:layout_constraintStart_toStartOf="@+id/phoneNumberIndicator"
             app:layout_constraintTop_toBottomOf="@+id/phoneNumberIndicator" />
 
@@ -127,6 +129,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins_semibold_600"
             android:text="TextView"
+            android:textColor="@color/texttheme"
             app:layout_constraintStart_toStartOf="@+id/ageIndicator"
             app:layout_constraintTop_toBottomOf="@+id/ageIndicator" />
 

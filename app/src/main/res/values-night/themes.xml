@@ -8,11 +8,15 @@
 
     <!-- Screen Background Color -->
     <style name="Screen">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">#202020</item>
+    </style>
+
+    <style name="Icons">
+        <item name="android:tint">#FFFFFF</item>
     </style>
 
     <!-- Text Background Color   -->
     <style name="Text">
-        <item name="android:textColor">#A077FF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

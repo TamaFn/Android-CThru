@@ -2,6 +2,7 @@ package com.example.finalproject_cthru.view.profile
 
 import android.app.Activity
 import android.content.Intent
+import android.icu.util.VersionInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.example.finalproject_cthru.BuildConfig
 import com.example.finalproject_cthru.R
 import com.example.finalproject_cthru.data.local.pref.SettingPreferences
 import com.example.finalproject_cthru.data.local.pref.dataStore // Import your dataStore extension property here
@@ -44,6 +46,8 @@ class ProfileFragment : Fragment() {
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
         displayUserInfo()
+
+        binding.versionInfo.text = BuildConfig.VERSION_NAME
 
         binding.logoutButton.setOnClickListener {
             signOut()

@@ -11,7 +11,7 @@ data class TestingResponse(
 	val message: String? = null
 )
 
-data class Data(
+data class ScanData(
 
 	@field:SerializedName("detection")
 	val detection: String? = null,

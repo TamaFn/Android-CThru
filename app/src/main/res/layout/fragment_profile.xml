@@ -135,12 +135,12 @@
 
         <TextView
             android:id="@+id/textView9"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/poppins_semibold_600"
             android:text="@string/settings_preferences"
-            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/ageView"
             app:layout_constraintTop_toBottomOf="@+id/ageView" />
 
@@ -168,6 +168,7 @@
 
         <ImageView
             android:id="@+id/imageView6"
+            style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -190,6 +191,7 @@
 
         <ImageView
             android:id="@+id/imageView7"
+            style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -224,6 +226,7 @@
 
         <ImageView
             android:id="@+id/imageView8"
+            style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -233,6 +236,7 @@
 
         <ImageView
             android:id="@+id/imageView9"
+            style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -254,6 +258,7 @@
 
         <ImageView
             android:id="@+id/imageView10"
+            style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -283,7 +288,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ageView" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/version_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"

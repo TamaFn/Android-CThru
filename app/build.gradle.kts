@@ -18,6 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         buildConfigField("String", "AUTH_GOOGLE", "\"788405030945-819vpuo70gncjhlv73nlhrb8h918d0l5.apps.googleusercontent.com\"")
+        buildConfigField("String", "VERSION_NAME", "\"1.0\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

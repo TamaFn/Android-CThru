@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".view.profile.ProfileEditActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

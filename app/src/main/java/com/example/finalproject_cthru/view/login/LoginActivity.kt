@@ -212,17 +212,20 @@ class LoginActivity : AppCompatActivity() {
 //    }
 
     private fun forgotPassword(){
-        val email = binding.emailEditText.text.toString()
-        if (email.isNotEmpty()) {
-            firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Password reset email sent.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Failed to send password reset email.", Toast.LENGTH_SHORT).show()
+        binding.passwordLabel.setOnClickListener {
+            val email = binding.emailEditText.text.toString()
+            if (email.isNotEmpty()) {
+                firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Password reset email sent.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        Log.d("ResetPasswordFailed", task.exception.toString())
+                    }
                 }
+            } else {
+                Toast.makeText(this, "Please enter your email.", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            Toast.makeText(this, "Please enter your email address.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -264,6 +267,7 @@ class LoginActivity : AppCompatActivity() {
             startDelay = 100
         }.start()
     }
+
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar2.visibility = if (isLoading) View.VISIBLE else View.GONE

@@ -60,6 +60,7 @@
             android:text="Tiga Tahun Terakhir, Temuan Kasus TBC Anak di Indonesia Meningkat"
             android:textAlignment="viewStart"
             android:textSize="14sp"
+            android:textColor="@color/texttheme"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/news_image_container"
             app:layout_constraintEnd_toEndOf="parent"

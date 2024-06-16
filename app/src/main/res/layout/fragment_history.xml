@@ -18,6 +18,7 @@
         android:text="@string/log_history"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/texttheme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyzeButton" />
 
@@ -29,6 +30,7 @@
         android:layout_marginTop="80dp"
         android:fontFamily="@font/poppins_semibold_600"
         android:text="@string/title_history"
+        android:textColor="@color/texttheme"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

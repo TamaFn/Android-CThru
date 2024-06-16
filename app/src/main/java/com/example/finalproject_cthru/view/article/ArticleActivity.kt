@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -33,29 +35,17 @@ class ArticleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArticleBinding
     private val articleViewModel by viewModels<ArticleViewModel>()
     private lateinit var adapter: ArticleAdapter
-    private var articleImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        printResponse(this)
         adapter = ArticleAdapter()
         setupSearchBar()
         setupRecyclerView()
         observeLiveData()
     }
-
-//    fun printResponse(context: Context) {
-//        val inputStream = context.resources.openRawResource(R.raw.article)
-//        val reader = InputStreamReader(inputStream)
-//
-//        val articles = Gson().fromJson(reader, ArticleResponse::class.java)
-//
-//        println(articles)
-//        reader.close()
-//    }
 
     private fun observeLiveData() {
         articleViewModel.setMockData(this)
@@ -63,10 +53,7 @@ class ArticleActivity : AppCompatActivity() {
             if (articles != null && articles.isNotEmpty()) {
                 setArticles(articles)
             } else {
-                // Handle empty or null list of articles
                 Log.e("ArticleActivity", "No articles found")
-                // You can also update the UI to indicate no articles found
-//                binding.emptyView.visibility = View.VISIBLE
             }
         }
         articleViewModel.isLoading.observe(this) { isLoading ->
@@ -79,9 +66,7 @@ class ArticleActivity : AppCompatActivity() {
     }
 
     private fun setArticles(articles: List<ArticlesItem>) {
-        // Do not recreate the adapter, just update the data
         adapter.submitList(articles)
-//        binding.emptyView.visibility = if (articles.isEmpty()) View.VISIBLE else View.GONE
     }
 
     private fun setupRecyclerView() {
@@ -89,8 +74,7 @@ class ArticleActivity : AppCompatActivity() {
         binding.rvAdapter.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvAdapter.addItemDecoration(itemDecoration)
-
-        binding.rvAdapter.adapter = adapter // Set the adapter once here
+        binding.rvAdapter.adapter = adapter
 
         adapter.setOnItemClickCallback(object : ArticleAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ArticlesItem) {
@@ -106,13 +90,14 @@ class ArticleActivity : AppCompatActivity() {
     private fun setupSearchBar() {
         with(binding) {
             searchView.setupWithSearchBar(SearchBar)
-            searchView.editText.setOnEditorActionListener { _, _, _ ->
-                val query = binding.searchView.text.toString()
-                // Trigger the search functionality here
-                // articleViewModel.searchArticles(query)
-                binding.searchView.hide()
-                true
-            }
+            searchView.editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val query = s.toString()
+                    articleViewModel.searchArticles(query)
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
             SearchBar.inflateMenu(R.menu.search)
             SearchBar.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
@@ -123,8 +108,10 @@ class ArticleActivity : AppCompatActivity() {
                     }
                     else -> false
                 }
-                true
             }
         }
     }
 }
+
+
+

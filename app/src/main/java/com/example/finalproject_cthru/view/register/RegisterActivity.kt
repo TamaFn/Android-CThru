@@ -10,6 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalproject_cthru.MainActivity
 import com.example.finalproject_cthru.databinding.ActivityRegisterBinding
 import com.example.finalproject_cthru.view.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -42,13 +43,16 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val pass = binding.passwordEditText.text.toString()
             val confirmPass = binding.confirmpasswordEditText.text.toString()
+            val name = binding.nameEditText.text.toString() // get the name entered by the user
 
             if (email.isNotEmpty() && pass.isNotEmpty() && confirmPass.isNotEmpty()) {
                 if (pass == confirmPass) {
 
                     firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val intent = Intent(this, LoginActivity::class.java)
+                            // pass the name as an argument to the HomeFragment
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("user_name", name)
                             startActivity(intent)
                         } else {
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()

@@ -65,6 +65,14 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         observeLiveData()
 
+        // Get the name from the arguments
+        val name = arguments?.getString("user_name")
+
+        // Display the name in the UI
+        if (name != null) {
+            binding.nameuserHome.text = name
+        }
+
         return root
     }
 

@@ -47,6 +47,7 @@
             android:fontFamily="@font/poppins_semibold_600"
             android:text="Add image"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="10sp"
             app:cornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +168,6 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="Phone Number"
-                android:inputType="textPassword"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -207,7 +207,6 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="Age Number"
-                android:inputType="textPassword"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -223,6 +222,7 @@
             android:fontFamily="@font/poppins_semibold_600"
             android:text="Save edits"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"

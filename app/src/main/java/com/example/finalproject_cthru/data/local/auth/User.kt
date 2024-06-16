@@ -16,3 +16,11 @@ fun FirebaseUser?.toUser() = this?.let {
         email = this.email.orEmpty()
     )
 }
+
+
+data class Users(
+    var fullNameUser: String? = null,
+    var phoneNumber: String? = null,
+    var age: String? = null,
+    var imageUrl: String? = null
+)

@@ -86,8 +86,15 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // Handle the result from ProfileEditActivity
+            val name = data?.getStringExtra("name")
+            val email = data?.getStringExtra("email")
+            val phone = data?.getStringExtra("phone")
+            val age = data?.getStringExtra("age")
             // Update UI or refresh data if needed
+            binding.name.text = name
+            binding.email.text = email
+            binding.phoneNumberView.text = phone
+            binding.ageView.text = age
         }
     }
 

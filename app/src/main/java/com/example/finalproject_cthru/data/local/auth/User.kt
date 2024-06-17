@@ -1,6 +1,7 @@
 package com.example.finalproject_cthru.data.local.auth
 
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.PropertyName
 
 data class User(
     val id : String,
@@ -19,8 +20,8 @@ fun FirebaseUser?.toUser() = this?.let {
 
 
 data class Users(
-    var fullNameUser: String? = null,
-    var phoneNumber: String? = null,
-    var age: String? = null,
-    var imageUrl: String? = null
+    @PropertyName("fullNameUser") var fullNameUser: String? = null,
+    @PropertyName("phoneNumber") var phoneNumber: String? = null,
+    @PropertyName("age") var age: String? = null,
+    @PropertyName("imageUrl") var imageUrl: String? = null,
 )

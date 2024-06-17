@@ -73,11 +73,10 @@ class ProfileEditActivity : AppCompatActivity() {
         binding.saveButton.setOnClickListener {
             Log.d("Save Button", "Save button clicked")
             val fullName = binding.nameEditText.text.toString()
-            val phoneNumber = binding.phoneEditText.text.toString()
-            val age = binding.ageEditText.text.toString()
+            val phoneNumber = binding.phoneEditTextProfile.text.toString()
+            val age = binding.ageEditTextProfile.text.toString()
 
-            val user = Users(fullName, age, phoneNumber, currentImageUri.toString())
-
+            val user = Users(fullName, phoneNumber, age, currentImageUri.toString())
             if (uid != null) {
                 databaseReference.child(uid).setValue(user).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -104,8 +103,8 @@ class ProfileEditActivity : AppCompatActivity() {
             val user = dataSnapshot.getValue(Users::class.java)
             user?.let {
                 binding.nameEditText.setText(it.fullNameUser)
-                binding.phoneEditText.setText(it.phoneNumber)
-                binding.ageEditText.setText(it.age)
+                binding.phoneEditTextProfile.setText(it.phoneNumber)
+                binding.ageEditTextProfile.setText(it.age)
                 if (!it.imageUrl.isNullOrEmpty()) {
                     currentImageUri = Uri.parse(it.imageUrl)
                     showImage()

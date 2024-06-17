@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
                     currentImageUrl = it.imageUrl
                     showImage()
                 }
-            }
+            } 
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "Failed to load profile", Toast.LENGTH_SHORT).show()
         }

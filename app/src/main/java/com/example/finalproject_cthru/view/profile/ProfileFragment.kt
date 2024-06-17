@@ -40,7 +40,6 @@ class ProfileFragment : Fragment() {
     private lateinit var darkthemeViewModel: DarkThemeViewModel
     private lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
-    private val REQUEST_CODE_READ_EXTERNAL_STORAGE = 1
     private var currentImageUrl: String? = null
 
     override fun onCreateView(

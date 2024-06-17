@@ -117,35 +117,21 @@ class ProfileEditActivity : AppCompatActivity() {
         }
     }
 
-//    private fun uploadFile(uid: String) {
-//        Log.d("Upload File", "Uploading file...")
-//
-//        currentImageUri?.let { uri ->
-//            storageReference.putFile(uri).addOnSuccessListener {
-//                Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }.addOnFailureListener {
-//                Toast.makeText(this, "Failed to update profile image", Toast.LENGTH_SHORT).show()
-//            }
-//        } ?: run {
-//            Log.d("Upload File", "No image selected")
-//            Toast.makeText(this@ProfileEditActivity, "No image selected", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
     private fun uploadFile(uid: String) {
         Log.d("Upload File", "Uploading file...")
 
         currentImageUri?.let { uri ->
-            val inputStream = contentResolver.openInputStream(uri)
-            val tempFile = File.createTempFile("image", "jpg")
-            val outputStream = FileOutputStream(tempFile)
-            inputStream?.copyTo(outputStream)
-
-            val fileUri = Uri.fromFile(tempFile)
-            storageReference.putFile(fileUri).addOnSuccessListener {
-                Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                finish()
+            storageReference.putFile(uri).addOnSuccessListener {
+                storageReference.downloadUrl.addOnSuccessListener { url ->
+                    val imageUrl = url.toString()
+                    databaseReference.child(uid).child("imageUrl").setValue(imageUrl)
+                        .addOnCompleteListener {
+                            Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }.addOnFailureListener {
+                            Toast.makeText(this, "Failed to update profile image URL", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }.addOnFailureListener {
                 Toast.makeText(this, "Failed to update profile image", Toast.LENGTH_SHORT).show()
             }

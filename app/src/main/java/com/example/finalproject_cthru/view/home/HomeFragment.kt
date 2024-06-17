@@ -10,12 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.finalproject_cthru.R
+import com.example.finalproject_cthru.data.local.auth.Users
 import com.example.finalproject_cthru.data.remote.response.ArticlesItem
 import com.example.finalproject_cthru.databinding.FragmentHomeBinding
 import com.example.finalproject_cthru.view.adapter.ArticleAdapter
@@ -25,10 +28,19 @@ import com.example.finalproject_cthru.view.detailarticle.DetailArticleActivity
 import com.example.finalproject_cthru.view.onboarding.OnboardingActivity
 import com.example.finalproject_cthru.view.profile.ProfileFragment
 import com.example.finalproject_cthru.view.upload.UploadActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var storageReference: StorageReference
+    private var currentImageUrl: String? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -59,6 +71,17 @@ class HomeFragment : Fragment() {
 //            startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE)
 //        }
 
+        // Setting Passing Data From Firebase
+        firebaseAuth = FirebaseAuth.getInstance()
+        val uid = firebaseAuth.currentUser?.uid
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        storageReference = FirebaseStorage.getInstance().getReference("Users/$uid/profile.jpg")
+
+        if (uid != null) {
+            loadUserProfile(uid)
+        }
+
+
         backHome()
 
         adapter = ArticleAdapter()
@@ -77,6 +100,30 @@ class HomeFragment : Fragment() {
         if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // Handle the result from ProfileEditActivity
             // Update UI or refresh data if needed
+        }
+    }
+
+    private fun loadUserProfile(uid: String) {
+        databaseReference.child(uid).get().addOnSuccessListener { dataSnapshot ->
+            val user = dataSnapshot.getValue(Users::class.java)
+            user?.let {
+                binding.nameuserHome.text = it.fullNameUser
+                if (!it.imageUrl.isNullOrEmpty()) {
+                    currentImageUrl = it.imageUrl
+                    showImage()
+                }
+            }
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Failed to load profile", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showImage() {
+        currentImageUrl?.let { imageUrl ->
+            Log.d("Image URL", "showImage: $imageUrl")
+            Glide.with(this)
+                .load(imageUrl)
+                .into(binding.imgUser)
         }
     }
 

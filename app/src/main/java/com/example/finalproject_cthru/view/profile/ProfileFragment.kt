@@ -2,24 +2,23 @@ package com.example.finalproject_cthru.view.profile
 
 import android.app.Activity
 import android.content.Intent
-import android.icu.util.VersionInfo
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.finalproject_cthru.BuildConfig
 import com.example.finalproject_cthru.R
 import com.example.finalproject_cthru.data.local.auth.Users
 import com.example.finalproject_cthru.data.local.pref.SettingPreferences
-import com.example.finalproject_cthru.data.local.pref.dataStore // Import your dataStore extension property here
+import com.example.finalproject_cthru.data.local.pref.dataStore
 import com.example.finalproject_cthru.databinding.FragmentProfileBinding
 import com.example.finalproject_cthru.view.darktheme.DarkThemeViewModel
 import com.example.finalproject_cthru.view.login.LoginActivity
@@ -41,7 +40,8 @@ class ProfileFragment : Fragment() {
     private lateinit var darkthemeViewModel: DarkThemeViewModel
     private lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
-    private var currentImageUri: Uri? = null
+    private val REQUEST_CODE_READ_EXTERNAL_STORAGE = 1
+    private var currentImageUrl: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,18 +50,15 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
+        // Setting Passing Data From Firebase
         firebaseAuth = FirebaseAuth.getInstance()
         val uid = firebaseAuth.currentUser?.uid
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         storageReference = FirebaseStorage.getInstance().getReference("Users/$uid/profile.jpg")
 
-        // Passing data from Firebase Database
         if (uid != null) {
             loadUserProfile(uid)
         }
-
-
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -104,20 +101,18 @@ class ProfileFragment : Fragment() {
             darkthemeViewModel.saveThemeSetting(isChecked)
         }
 
-
-
         return root
     }
 
-    private fun  loadUserProfile(uid: String) {
+    private fun loadUserProfile(uid: String) {
         databaseReference.child(uid).get().addOnSuccessListener { dataSnapshot ->
             val user = dataSnapshot.getValue(Users::class.java)
             user?.let {
-                binding.name.setText(it.fullNameUser)
-                binding.phoneNumberView.setText(it.phoneNumber)
-                binding.ageView.setText(it.age)
+                binding.name.text = it.fullNameUser
+                binding.phoneNumberView.text = it.phoneNumber
+                binding.ageView.text = it.age
                 if (!it.imageUrl.isNullOrEmpty()) {
-                    currentImageUri = Uri.parse(it.imageUrl)
+                    currentImageUrl = it.imageUrl
                     showImage()
                 }
             }
@@ -126,10 +121,13 @@ class ProfileFragment : Fragment() {
         }
     }
 
+
     private fun showImage() {
-        currentImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
-            Glide.with(this).load(it).into(binding.imgAvatar)
+        currentImageUrl?.let { imageUrl ->
+            Log.d("Image URL", "showImage: $imageUrl")
+            Glide.with(this)
+                .load(imageUrl)
+                .into(binding.imgAvatar)
         }
     }
 
@@ -137,7 +135,7 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-
+            // Handle result if needed
         }
     }
 
@@ -150,7 +148,6 @@ class ProfileFragment : Fragment() {
             binding.email.text = email
         }
     }
-
 
     private fun signOut() {
         firebaseAuth.signOut()

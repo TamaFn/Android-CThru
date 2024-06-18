@@ -180,7 +180,7 @@ class UploadActivity : AppCompatActivity() {
 
                         val intent = Intent(this@UploadActivity, ResultActivity::class.java)
                         intent.putExtra(ResultActivity.EXTRA_IMAGE_URI, currentImageUri.toString())
-                        intent.putExtra(ResultActivity.EXTRA_PREDICT_CATARACT , this?.cataractPrediction)
+                        intent.putExtra(ResultActivity.EXTRA_PREDICT_CATARACT , this?.cataractDetection)
                         intent.putExtra(ResultActivity.EXTRA_ID , this?.id)
                         intent.putExtras(bundle)
                         startActivityForResult(intent, HomeFragment.EDIT_PROFILE_REQUEST_CODE)

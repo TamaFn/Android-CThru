@@ -13,18 +13,21 @@ data class Response(
 
 data class Data(
 
+	@field:SerializedName("datetime")
+	val datetime: String? = null,
+
 	@field:SerializedName("cataract_confidence")
 	val cataractConfidence: Any? = null,
-
-	@field:SerializedName("cataract_prediction")
-	val cataractPrediction: String? = null,
-
-	@field:SerializedName("eye_prediction")
-	val eyePrediction: String? = null,
 
 	@field:SerializedName("eye_confidence")
 	val eyeConfidence: Any? = null,
 
+	@field:SerializedName("cataract_detection")
+	val cataractDetection: String? = null,
+
 	@field:SerializedName("id")
-	val id: String? = null
+	val id: String? = null,
+
+	@field:SerializedName("eye_detection")
+	val eyeDetection: String? = null
 )

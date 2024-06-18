@@ -43,7 +43,8 @@ class HomeFragment : Fragment() {
     private var currentImageUrl: String? = null
 
     // This property is only valid between onCreateView and onDestroyView.
-    private val binding get() = _binding!!
+    private val binding get() = _binding ?: throw IllegalStateException("FragmentHomeBinding should not be null")
+
 
     private val homeViewModel by viewModels<HomeViewModel>()
     private lateinit var adapter: ArticleAdapter

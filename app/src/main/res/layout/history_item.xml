@@ -109,6 +109,7 @@
             android:fontFamily="@font/poppins_medium_500"
             android:padding="1dp"
             android:text="Delete"
+            android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

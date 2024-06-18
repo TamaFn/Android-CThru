@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(BuildConfig.default_web_client_id)
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
@@ -85,6 +85,7 @@ class ProfileFragment : Fragment() {
             this,
             DarkThemeViewModel.DarkThemeViewModelFactory(pref)
         )[DarkThemeViewModel::class.java]
+
 
         darkthemeViewModel.getThemeSettings().observe(viewLifecycleOwner) { isActive ->
             if (isActive) {
@@ -131,10 +132,11 @@ class ProfileFragment : Fragment() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // Handle result if needed
+    override fun onResume() {
+        super.onResume()
+        val uid = firebaseAuth.currentUser?.uid
+        if (uid != null) {
+            loadUserProfile(uid)
         }
     }
 

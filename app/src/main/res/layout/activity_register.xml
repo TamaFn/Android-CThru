@@ -6,6 +6,7 @@
     tools:context=".view.register.RegisterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -234,8 +235,8 @@
             android:backgroundTint="@color/blue_7"
             android:fontFamily="@font/poppins_semibold_600"
             android:text="@string/register"
-            app:cornerRadius="10dp"
             android:textColor="@color/white"
+            app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

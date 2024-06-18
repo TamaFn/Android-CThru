@@ -19,6 +19,7 @@ android {
         versionName = "1.0"
         buildConfigField("String", "AUTH_GOOGLE", "\"788405030945-819vpuo70gncjhlv73nlhrb8h918d0l5.apps.googleusercontent.com\"")
         buildConfigField("String", "VERSION_NAME", "\"1.0\"")
+        buildConfigField("String", "default_web_client_id", "\"242092854808-mlipesalfnbktmdhh11qr2t9i2l1e3kf.apps.googleusercontent.com\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

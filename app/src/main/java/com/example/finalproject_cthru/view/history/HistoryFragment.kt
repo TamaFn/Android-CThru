@@ -40,6 +40,10 @@ class HistoryFragment : Fragment() {
         binding.logAdapter.layoutManager = LinearLayoutManager(requireContext())
         binding.logAdapter.setHasFixedSize(true)
 
+//        binding.deleteAllButton.setOnClickListener {
+//            dashboardViewModel.removeAllUsers()
+//        }
+
         dashboardViewModel.getAllUsers().observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
                 val adapter = DetectionAdapter(list.toMutableList(), dashboardViewModel)
